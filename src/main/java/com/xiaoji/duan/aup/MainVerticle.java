@@ -676,6 +676,7 @@ public class MainVerticle extends AbstractVerticle {
 															.put("province", "")
 															.put("city", "")
 															.put("country", "")
+															.put("phoneno", phoneno)
 															.put("avatar", avatarurl)
 															.put("avatarbase64", avatarbase64)
 															.put("privilege", new JsonArray());
@@ -706,6 +707,7 @@ public class MainVerticle extends AbstractVerticle {
 																.put("province", "")
 																.put("city", "")
 																.put("country", "")
+																.put("phoneno", phoneno)
 																.put("avatar", getAvatarUrl(username))
 																.put("privilege", new JsonArray());
 															mongodb.save("aup_user_info", userinfo, save -> {
