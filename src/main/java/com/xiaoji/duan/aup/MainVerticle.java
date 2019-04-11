@@ -136,6 +136,7 @@ public class MainVerticle extends AbstractVerticle {
 
 		router.route("/aup/user/:phoneno/avatar").handler(datahandler);
 		router.get("/aup/user/:phoneno/avatar").handler(ctx -> this.getAvatarByPhone(ctx));
+		router.get("/aup/user/:phoneno/avatar/json").handler(ctx -> this.getAvatarByPhoneWithJson(ctx));
 
 		router.route("/aup/data/:phoneno/userinfo").handler(datahandler);
 		router.get("/aup/data/:phoneno/userinfo").produces("application/json").handler(ctx -> this.getUserInfoByPhone(ctx));
@@ -264,7 +265,54 @@ public class MainVerticle extends AbstractVerticle {
             				}
             			});
         			} else {
-            			ctx.response().putHeader("Content-Type", "text/plain").end(userinfo.getString("avatar"));
+            			ctx.response().putHeader("Content-Type", "text/plain").end(userinfo.getString("avatarbase64"));
+        			}
+        		}
+        	} else {
+				ret.put("errcode", "-3");
+				ret.put("errmsg", "服务器异常, 用户获取失败!");
+
+				ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
+        	}
+        });
+	}
+	
+	private void getAvatarByPhoneWithJson(RoutingContext ctx) {
+        String phoneno = ctx.request().getParam("phoneno");
+
+		JsonObject ret = new JsonObject();
+		ret.put("errcode", "0");
+		ret.put("errmsg", "");
+		ret.put("data", new JsonObject());
+
+        mongodb.findOne("aup_user_info", new JsonObject().put("$or", new JsonArray()
+        		.add(new JsonObject().put("openid", phoneno))
+        		.add(new JsonObject().put("phoneno", phoneno))
+        		), new JsonObject(), findOne -> {
+        	if (findOne.succeeded()) {
+        		JsonObject userinfo = findOne.result();
+        		
+        		if (userinfo == null || userinfo.isEmpty()) {
+        			ret.put("errcode", "10041");
+        			ret.put("errmsg", "用户不存在!");
+
+        			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
+        		} else {
+        			if (userinfo.getString("avatar").startsWith("http")) {
+            			client.getAbs(userinfo.getString("avatar")).send(handler -> {
+            				if (handler.succeeded()) {
+            					HttpResponse<Buffer> resp = handler.result();
+            					ret.put("data", new JsonObject().put("base64", resp.bodyAsString()));
+            					
+                    			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
+            				} else {
+                    			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
+            				}
+            			});
+        			} else {
+    					ret.put("data", new JsonObject().put("base64", userinfo.getString("avatarbase64")));
+    					
+            			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
         			}
         		}
         	} else {
