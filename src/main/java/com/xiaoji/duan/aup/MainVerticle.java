@@ -607,6 +607,7 @@ public class MainVerticle extends AbstractVerticle {
 		else
 			url.append(username);
 		
+		System.out.println("Avatar url " + url.toString());
 		return url.toString();
 	}
 
