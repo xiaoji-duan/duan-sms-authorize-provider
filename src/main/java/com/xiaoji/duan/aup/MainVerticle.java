@@ -197,6 +197,7 @@ public class MainVerticle extends AbstractVerticle {
 								userinfo.put("avatarbase64", avatarbase64);
 
 			        			ret.put("data", new JsonObject()
+			        					.put("openid", userinfo.getString("openid"))
 			        					.put("phoneno", userinfo.getString("phoneno"))
 			        					.put("nickname", userinfo.getString("nickname"))
 			        					.put("avatar", userinfo.getString("avatar"))
@@ -206,6 +207,7 @@ public class MainVerticle extends AbstractVerticle {
 			        			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
 							} else {
 			        			ret.put("data", new JsonObject()
+			        					.put("openid", userinfo.getString("openid"))
 			        					.put("phoneno", userinfo.getString("phoneno"))
 			        					.put("nickname", userinfo.getString("nickname"))
 			        					.put("avatar", userinfo.getString("avatar"))
@@ -216,6 +218,7 @@ public class MainVerticle extends AbstractVerticle {
 						});
         			} else {
             			ret.put("data", new JsonObject()
+	        					.put("openid", userinfo.getString("openid"))
             					.put("phoneno", userinfo.getString("phoneno"))
             					.put("nickname", userinfo.getString("nickname"))
             					.put("avatar", userinfo.getString("avatar"))
