@@ -188,7 +188,7 @@ public class MainVerticle extends AbstractVerticle {
         			if (!userinfo.containsKey("avatarbase64") || StringUtils.isEmpty(userinfo.getString("avatarbase64"))) {
         				String username = userinfo.getString("nickname");
 						String avatarurl = getAvatarUrl(username);
-
+						System.out.println(username + " has not avatar, create default");
 						client.getAbs(avatarurl).send(handler -> {
 							if (handler.succeeded()) {
 								HttpResponse<Buffer> avatarresult = handler.result();
@@ -217,11 +217,14 @@ public class MainVerticle extends AbstractVerticle {
 							}
 						});
         			} else {
-            			ret.put("data", new JsonObject()
+						System.out.println(userinfo.getString("nickname") + " has avatar, return");
+
+						ret.put("data", new JsonObject()
 	        					.put("openid", userinfo.getString("openid"))
             					.put("phoneno", userinfo.getString("phoneno"))
             					.put("nickname", userinfo.getString("nickname"))
             					.put("avatar", userinfo.getString("avatar"))
+	        					.put("avatarbase64", userinfo.getString("avatarbase64"))
             					);
             			
             			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
