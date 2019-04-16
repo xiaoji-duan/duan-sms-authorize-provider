@@ -81,7 +81,7 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
   ```
 
 * 短应用服务访问
-  ** 获取登录账户信息
+  ** 获取账户信息
   
   ```
   post /aup/data/:phoneno/userinfo
