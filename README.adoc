@@ -72,7 +72,6 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
 
   登录成功后取得code, 使用api/access_token取得token和用户信息, 完成登录流程
 
-  ```
   post /aup/dologin
   request
     phoneno!string: 手机号码
@@ -88,7 +87,6 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
       openid: 登录用户ID
       unionid: 登录用户唯一ID
       state: 请求参数原值返回,无请求值返回空字符串
-  ```
   
   ** 获取账户登录Token
   
