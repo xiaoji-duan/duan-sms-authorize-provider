@@ -27,12 +27,12 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
 * 产品客户端使用接口
   ** 密码/短信登录
   
-  ```
-  post /aup/dologin
-  ```
+```
+post /aup/dologin
+```
   
   ** 帐户注册
   
-  ```
-  post /aup/doregister
-  ```
+```
+post /aup/doregister
+```
