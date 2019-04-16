@@ -101,13 +101,44 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
   
   ** 获取账户登录Token
   
-  post /aup/api/access_token
+  post /aup/api/access_token?appid=:appid&secret=:secret&code=:code&grant_type=:grant_type
+  
   request
+    appid: 应用ID
+    secret: 应用SECRET
+    code: 登录返回Code
+    grant_type: 授权类型
+  
   response
+    errcode: 处理结果状态代码（0为成功）
+    errmsg: 处理结果消息内容
+    data: 返回数据
+      appid: 应用ID
+      access_token: 登录Token
+      refresh_token: 刷新Token用Token
+      access_time: 登录时间
+      expires_in: 过期时间（0为不过期）
+      scope: 访问授权
 
   ** 刷新账户登录Token
   
   post /aup/api/refresh_token
+
+  request
+    appid: 应用ID
+    refresh_token: 刷新Token用Token
+    grant_type: 授权类型
+
+  response
+    errcode: 处理结果状态代码（0为成功）
+    errmsg: 处理结果消息内容
+    data: 返回数据
+      appid: 应用ID
+      access_token: 登录Token
+      refresh_token: 刷新Token用Token
+      access_time: 登录时间
+      expires_in: 过期时间（0为不过期）
+      scope: 访问授权
 
   ** 获取登录账户信息
   
