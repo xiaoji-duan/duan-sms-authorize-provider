@@ -27,40 +27,28 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
 * 第三方应用OAuth2访问
   ** 账户注册
   
-  ```
   post /aup/register
-  ```
 
   ** 账户登录
   
-  ```
   post /aup/login
-  ```
 
   ** 获取账户登录Token
   
-  ```
   post /aup/api/access_token
-  ```
 
   ** 刷新账户登录Token
   
-  ```
   post /aup/api/refresh_token
-  ```
 
   ** 获取登录账户信息
   
-  ```
   post /aup/api/userinfo
-  ```
 
 * 产品客户端访问
   ** 发送短信验证码
   
-  ```
   post /aup/verifycode
-  ```
 
   ** 帐户注册
   
@@ -86,13 +74,12 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
       avatar: 头像获取URL
       avatarbase64: Base64头像
       privilege!array: 特权
-      
 
   ** 密码/短信登录
 
   登录成功后取得code, 使用api/access_token取得token和用户信息, 完成登录流程
 
-  post /aup/dologin
+  post /aup/dologin?state=:state
   request
     phoneno!string: 手机号码
     userpassword!string: 帐户密码(可选 密码登录时必须)
@@ -110,25 +97,19 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
   
   ** 获取账户登录Token
   
-  ```
   post /aup/api/access_token
-  ```
+  request
+  response
 
   ** 刷新账户登录Token
   
-  ```
   post /aup/api/refresh_token
-  ```
 
   ** 获取登录账户信息
   
-  ```
   post /aup/api/userinfo
-  ```
 
 * 短应用服务访问
   ** 获取账户信息
   
-  ```
   post /aup/data/:phoneno/userinfo
-  ```
