@@ -25,14 +25,38 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
 == 开始使用
 
 * 产品客户端使用接口
-  ** 密码/短信登录
+  ** 发送短信验证码
   
-```
-  post /aup/dologin
-```
-  
+  ```
+  post /aup/verifycode
+  ```
+
   ** 帐户注册
   
-```
+  ```
   post /aup/doregister
-```
+  ```
+
+  ** 密码/短信登录
+  
+  ```
+  post /aup/dologin
+  ```
+  
+  ** 获取账户登录Token
+  
+  ```
+  post /aup/api/access_token
+  ```
+
+  ** 刷新账户登录Token
+  
+  ```
+  post /aup/api/refresh_token
+  ```
+
+  ** 获取登录账户信息
+  
+  ```
+  post /aup/api/userinfo
+  ```
