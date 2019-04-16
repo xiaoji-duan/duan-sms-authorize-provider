@@ -48,8 +48,19 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
 * 产品客户端访问
   ** 发送短信验证码
   
-  post /aup/verifycode
+  短信验证码发送
 
+  post /aup/verifycode
+  
+  request
+    phoneno: 手机号码
+  
+  response
+    errcode: 处理结果状态代码（0为成功）
+    errmsg: 处理结果消息内容
+    data: 返回数据
+      verifykey: 短信验证码KEY
+  
   ** 帐户注册
   
   post /aup/doregister
