@@ -69,6 +69,7 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
   ```
 
   ** 密码/短信登录
+
   登录成功后取得code, 使用api/access_token取得token和用户信息, 完成登录流程
 
   ```
