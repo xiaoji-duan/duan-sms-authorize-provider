@@ -25,6 +25,18 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
 == 开始使用
 
 * OAuth2访问
+  ** 账户注册
+  
+  ```
+  post /aup/register
+  ```
+
+  ** 账户登录
+  
+  ```
+  post /aup/login
+  ```
+
   ** 获取账户登录Token
   
   ```
