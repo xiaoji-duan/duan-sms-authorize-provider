@@ -2,6 +2,25 @@
 
 image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.io"] image:https://img.shields.io/badge/code@duan-aup-brightgreen.svg[link="https://www.guobaa.com"]
 
+== 概要
 
+* 用户使用手机号码注册帐户
+* 用户使用手机短信验证码登录
+* 用户使用帐户密码登录
+* 用户使用手机短信验证码重置密码
+* 产品客户端通过登录代码(Code)取得登录Token
+* 产品客户端查询, 更新当前登录用户信息
+* 产品客户端根据帐户ID或者手机号码查询帐户概要信息（帐户ID,帐户姓名,手机号码,帐户头像）
+* 产品客户端根据帐户ID或者手机号码获取帐户头像
 
+== 功能
+
+* 支持通过密码或者短信验证码登录
+* 支持忘记密码
+* 支持帐户信息（包含头像）取得与更新
+* 支持Base64头像格式
+* 支持通过账户ID或者手机号码查询注册用户概要信息
+* 支持注册用户头像查询
+
+== 开始使用
 
