@@ -69,9 +69,24 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
   ```
 
   ** 密码/短信登录
-  
+  登录成功后取得code, 使用api/access_token取得token和用户信息, 完成登录流程
+
   ```
   post /aup/dologin
+  request
+    phoneno!string: 手机号码
+    userpassword!string: 帐户密码(可选 密码登录时必须)
+    verifykey!string: 短信验证码KEY(可选 短信登录时必须)
+    verifycode!string: 短信验证码(可选 短信登录时必须)
+    state!string: 登录状态字符串(可选)
+  response
+    errcode: 处理结果状态代码（0为成功）
+    errmsg: 处理结果消息内容
+    data: 返回数据
+      code: 本次登录Code
+      openid: 登录用户ID
+      unionid: 登录用户唯一ID
+      state: 请求参数原值返回,无请求值返回空字符串
   ```
   
   ** 获取账户登录Token
