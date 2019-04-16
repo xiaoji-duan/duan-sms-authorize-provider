@@ -24,7 +24,26 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
 
 == 开始使用
 
-* 产品客户端使用接口
+* OAuth2访问
+  ** 获取账户登录Token
+  
+  ```
+  post /aup/api/access_token
+  ```
+
+  ** 刷新账户登录Token
+  
+  ```
+  post /aup/api/refresh_token
+  ```
+
+  ** 获取登录账户信息
+  
+  ```
+  post /aup/api/userinfo
+  ```
+
+* 产品客户端访问
   ** 发送短信验证码
   
   ```
