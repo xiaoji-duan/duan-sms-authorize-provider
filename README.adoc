@@ -64,9 +64,29 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
 
   ** 帐户注册
   
-  ```
   post /aup/doregister
-  ```
+  request
+    phoneno!string: 手机号码
+    verifykey!string: 短信验证码KEY
+    verifycode!string: 短信验证码
+    username!string: 姓名
+    userpassword!string: 帐户密码
+  response
+    errcode: 处理结果状态代码（0为成功）
+    errmsg: 处理结果消息内容
+    data: 返回数据
+      openid: 帐户ID
+      nickname: 姓名
+      unionid: 帐户唯一ID
+      sex: 性别
+      province: 省份
+      city: 城市
+      country: 国家
+      phoneno: 手机号码
+      avatar: 头像获取URL
+      avatarbase64: Base64头像
+      privilege!array: 特权
+      
 
   ** 密码/短信登录
 
@@ -84,8 +104,8 @@ image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.i
     errmsg: 处理结果消息内容
     data: 返回数据
       code: 本次登录Code
-      openid: 登录用户ID
-      unionid: 登录用户唯一ID
+      openid: 登录帐户ID
+      unionid: 登录帐户唯一ID
       state: 请求参数原值返回,无请求值返回空字符串
   
   ** 获取账户登录Token
