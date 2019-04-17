@@ -3,6 +3,7 @@ package com.xiaoji.duan.aup;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -134,6 +135,9 @@ public class MainVerticle extends AbstractVerticle {
 		router.route("/aup/user/:phoneno/userinfo").handler(datahandler);
 		router.get("/aup/user/:phoneno/userinfo").produces("application/json").handler(ctx -> this.getUserInfoSimpleByPhone(ctx));
 
+		router.route("/aup/user/usersinfo").handler(datahandler);
+		router.get("/aup/user/usersinfo").produces("application/json").handler(ctx -> this.getUserInfoSimpleByPhones(ctx));
+
 		router.route("/aup/user/:phoneno/avatar").handler(datahandler);
 		router.get("/aup/user/:phoneno/avatar").handler(ctx -> this.getAvatarByPhone(ctx));
 		router.get("/aup/user/:phoneno/avatar/json").handler(ctx -> this.getAvatarByPhoneWithJson(ctx));
@@ -164,6 +168,55 @@ public class MainVerticle extends AbstractVerticle {
 		});
 	}
 
+	private void getUserInfoSimpleByPhones(RoutingContext ctx) {
+		JsonObject ret = new JsonObject();
+		ret.put("errcode", "0");
+		ret.put("errmsg", "");
+		ret.put("data", new JsonObject());
+
+		JsonObject req = ctx.getBodyAsJson();
+		
+		if (req == null || req.isEmpty()) {
+			ret.put("errcode", "-1");
+			ret.put("errmsg", "请求参数不存在, 非法请求!");
+
+			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
+			return;
+		}
+		
+		JsonArray phonenos = req.getJsonArray("phonenos", new JsonArray());
+		
+		JsonArray conds = new JsonArray();
+		
+		for (int i = 0; i < phonenos.size(); i++) {
+			String phoneno = phonenos.getString(i);
+			
+			conds.add(new JsonObject().put("openid", phoneno));
+			conds.add(new JsonObject().put("phoneno", phoneno));
+		}
+
+		JsonObject query = new JsonObject();
+		query.put("$or", conds);
+		
+		mongodb.find("aup_user_info", query, find -> {
+			if (find.succeeded()) {
+				List<JsonObject> users = find.result();
+				
+				if (users != null)
+					ret.put("data", new JsonObject().put("registusers", users));
+				else
+					ret.put("data", new JsonObject().put("registusers", new JsonArray()));
+				
+    			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
+			} else {
+				ret.put("errcode", "-3");
+				ret.put("errmsg", "服务器异常, 用户获取失败!");
+
+				ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
+			}
+		});
+	}
+	
 	private void getUserInfoSimpleByPhone(RoutingContext ctx) {
         String phoneno = ctx.request().getParam("phoneno");
 
