@@ -1,6 +1,6 @@
 = 短信用户注册与认证
 
-image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.io"] image:https://img.shields.io/badge/code@duan-aup-brightgreen.svg[link="https://www.guobaa.com"] image:https://img.shields.io/librariesio/github/xiaoji-duan/duan-jobflows.svg[https://github.com/xiaoji-duan/duan-jobflows]
+image:https://img.shields.io/badge/vert.x-3.6.3-purple.svg[link="https://vertx.io"] image:https://img.shields.io/badge/code@duan-aup-brightgreen.svg[link="https://www.guobaa.com"] image:https://img.shields.io/librariesio/github/xiaoji--duan/duan--jobflows.svg[https://github.com/xiaoji-duan/duan-jobflows]
 
 == 概要
 
