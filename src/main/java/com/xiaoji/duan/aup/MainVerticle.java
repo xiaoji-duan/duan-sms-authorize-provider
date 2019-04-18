@@ -205,12 +205,15 @@ public class MainVerticle extends AbstractVerticle {
 			if (find.succeeded()) {
 				List<JsonObject> users = find.result();
 				
-				if (users != null)
+				if (users != null) {
 					ret.put("data", new JsonObject().put("registusers", users));
-				else
+					System.out.println("Get " + users.size() + " user infos.");
+				} else {
 					ret.put("data", new JsonObject().put("registusers", new JsonArray()));
+					System.out.println("Get none user info.");
+				}
 				
-    			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
+				ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
 			} else {
 				ret.put("errcode", "-3");
 				ret.put("errmsg", "服务器异常, 用户获取失败!");
