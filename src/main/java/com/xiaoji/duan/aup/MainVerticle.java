@@ -1219,7 +1219,7 @@ public class MainVerticle extends AbstractVerticle {
         											handler.cause().printStackTrace();
         										}
         									});
-        									rabbitmq.queueDeclare(queue, true, false, false, new JsonObject().put("x-expires", "86400000"), handler -> {
+        									rabbitmq.queueDeclare(queue, true, false, false, handler -> {
         										if (handler.succeeded()) {
         										    System.out.println("Queue " + queue + " successfully declared");
         										} else {
