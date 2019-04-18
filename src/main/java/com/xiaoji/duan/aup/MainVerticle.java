@@ -135,8 +135,8 @@ public class MainVerticle extends AbstractVerticle {
 		router.route("/aup/user/:phoneno/userinfo").handler(datahandler);
 		router.get("/aup/user/:phoneno/userinfo").produces("application/json").handler(ctx -> this.getUserInfoSimpleByPhone(ctx));
 
-		router.route("/aup/user/usersinfo").handler(datahandler);
-		router.get("/aup/user/usersinfo").produces("application/json").handler(ctx -> this.getUserInfoSimpleByPhones(ctx));
+		router.route("/aup/user/multi/usersinfo").handler(datahandler);
+		router.post("/aup/user/multi/usersinfo").produces("application/json").handler(ctx -> this.getUserInfoSimpleByPhones(ctx));
 
 		router.route("/aup/user/:phoneno/avatar").handler(datahandler);
 		router.get("/aup/user/:phoneno/avatar").handler(ctx -> this.getAvatarByPhone(ctx));
@@ -169,6 +169,9 @@ public class MainVerticle extends AbstractVerticle {
 	}
 
 	private void getUserInfoSimpleByPhones(RoutingContext ctx) {
+		System.out.println("headers: " + ctx.request().headers());
+		System.out.println("body: " + ctx.getBodyAsString());
+
 		JsonObject ret = new JsonObject();
 		ret.put("errcode", "0");
 		ret.put("errmsg", "");
