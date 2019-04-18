@@ -1219,7 +1219,7 @@ public class MainVerticle extends AbstractVerticle {
         											handler.cause().printStackTrace();
         										}
         									});
-        									rabbitmq.queueDeclare(queue, true, false, false, handler -> {
+        									rabbitmq.queueDeclare(queue, true, false, false, new JsonObject().put("x-expires", "86400000"), handler -> {
         										if (handler.succeeded()) {
         										    System.out.println("Queue " + queue + " successfully declared");
         										} else {
@@ -1247,7 +1247,7 @@ public class MainVerticle extends AbstractVerticle {
         											handler.cause().printStackTrace();
         										}
         									});
-        									
+
         									// 发送未注册用户缓存消息
         									MessageProducer<JsonObject> producer = bridge.createProducer("mwxing_agenda_notification_stored_activation");
 
