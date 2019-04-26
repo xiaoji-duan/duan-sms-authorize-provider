@@ -1211,55 +1211,60 @@ public class MainVerticle extends AbstractVerticle {
         									String routingkeyDevice = "mwxing." + retaccess.getString("unionid") + "." + deviceId;
         									retaccess.put("cmq", queue);
 
-        									rabbitmq.exchangeDeclare(exchange, "direct", true, false, handler -> {
-        										if (handler.succeeded()) {
-        										    System.out.println("Exchange " + exchange + " successfully declared with fanout");
-        										} else {
-        											handler.cause().printStackTrace();
-        										}
-        									});
-        									rabbitmq.exchangeDeclare(announceexchange, "fanout", true, false, handler -> {
-        										if (handler.succeeded()) {
-        										    System.out.println("Exchange " + announceexchange + " successfully declared with fanout");
-        										} else {
-        											handler.cause().printStackTrace();
-        										}
-        									});
-        									rabbitmq.queueDeclare(queue, true, false, false, handler -> {
-        										if (handler.succeeded()) {
-        										    System.out.println("Queue " + queue + " successfully declared");
-        										} else {
-        											handler.cause().printStackTrace();
-        										}
-        									});
-        									rabbitmq.queueBind(queue, announceexchange, routingkey, handler -> {
-        										if (handler.succeeded()) {
-        										    System.out.println("Queue " + queue + " successfully binded to Exchange " + announceexchange + " with routing key " + routingkey);
-        										} else {
-        											handler.cause().printStackTrace();
-        										}
-        									});
-        									rabbitmq.queueBind(queue, exchange, routingkeyAccount, handler -> {
-        										if (handler.succeeded()) {
-        										    System.out.println("Queue " + queue + " successfully binded to Exchange " + exchange + " with routing key " + routingkeyAccount);
-        										} else {
-        											handler.cause().printStackTrace();
-        										}
-        									});
-        									rabbitmq.queueBind(queue, exchange, routingkeyDevice, handler -> {
-        										if (handler.succeeded()) {
-        										    System.out.println("Queue " + queue + " successfully binded to Exchange " + exchange + " with routing key " + routingkeyDevice);
-        										} else {
-        											handler.cause().printStackTrace();
-        										}
-        									});
+        									vertx.executeBlocking(block -> {
+	        									rabbitmq.exchangeDeclare(exchange, "direct", true, false, handler -> {
+	        										if (handler.succeeded()) {
+	        										    System.out.println("Exchange " + exchange + " successfully declared with fanout");
+	        										} else {
+	        											handler.cause().printStackTrace();
+	        										}
+	        									});
+	        									rabbitmq.exchangeDeclare(announceexchange, "fanout", true, false, handler -> {
+	        										if (handler.succeeded()) {
+	        										    System.out.println("Exchange " + announceexchange + " successfully declared with fanout");
+	        										} else {
+	        											handler.cause().printStackTrace();
+	        										}
+	        									});
+	        									rabbitmq.queueDeclare(queue, true, false, false, handler -> {
+	        										if (handler.succeeded()) {
+	        										    System.out.println("Queue " + queue + " successfully declared");
+	        										} else {
+	        											handler.cause().printStackTrace();
+	        										}
+	        									});
+	        									rabbitmq.queueBind(queue, announceexchange, routingkey, handler -> {
+	        										if (handler.succeeded()) {
+	        										    System.out.println("Queue " + queue + " successfully binded to Exchange " + announceexchange + " with routing key " + routingkey);
+	        										} else {
+	        											handler.cause().printStackTrace();
+	        										}
+	        									});
+	        									rabbitmq.queueBind(queue, exchange, routingkeyAccount, handler -> {
+	        										if (handler.succeeded()) {
+	        										    System.out.println("Queue " + queue + " successfully binded to Exchange " + exchange + " with routing key " + routingkeyAccount);
+	        										} else {
+	        											handler.cause().printStackTrace();
+	        										}
+	        									});
+	        									rabbitmq.queueBind(queue, exchange, routingkeyDevice, handler -> {
+	        										if (handler.succeeded()) {
+	        										    System.out.println("Queue " + queue + " successfully binded to Exchange " + exchange + " with routing key " + routingkeyDevice);
+	        										} else {
+	        											handler.cause().printStackTrace();
+	        										}
+	        									});
+											}, handler -> {});
 
-        									// 发送未注册用户缓存消息
-        									MessageProducer<JsonObject> producer = bridge.createProducer("mwxing_agenda_notification_stored_activation");
+        									vertx.executeBlocking(block -> {
+            									// 发送未注册用户缓存消息
+            									MessageProducer<JsonObject> producer = bridge.createProducer("mwxing_agenda_notification_stored_activation");
 
-        									JsonObject body = new JsonObject().put("context", new JsonObject().put("openid", retaccess.getString("openid")));
-        									producer.send(new JsonObject().put("body", body));
-        									
+            									JsonObject body = new JsonObject().put("context", new JsonObject().put("openid", retaccess.getString("openid")));
+            									producer.send(new JsonObject().put("body", body));
+            									
+        									}, handler -> {});
+
         									System.out.println("Exist user login " + retaccess.encode());
 
         									ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(retaccess.encode());
