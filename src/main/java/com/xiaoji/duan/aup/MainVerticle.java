@@ -1185,6 +1185,12 @@ public class MainVerticle extends AbstractVerticle {
         								if (update.succeeded()) {
         									JsonObject access = update.result();
 
+        									// 如果用户不存在
+        									if (access == null || access.isEmpty()) {
+            									ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(new JsonObject().put("errcode", 10001).put("errmsg", "Access Token取得失败").encode());
+            									return;
+        									}
+        									
         									access
         					        		.put("appid", appId)
                 							.put("access_token", Base64.encodeBase64URLSafeString(UUID.randomUUID().toString().getBytes()))
