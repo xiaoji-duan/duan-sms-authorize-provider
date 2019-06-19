@@ -546,7 +546,34 @@ public class MainVerticle extends AbstractVerticle {
         				data.put("password", md5password);
         			}
         			
+        			if (data.containsKey("device")) {
+        				data.getJsonObject("device").put("timestamp", System.currentTimeMillis());
+        			}
+        			
         			JsonObject updateuserinfo = userinfo.copy().mergeIn(data);
+
+        			if (data.containsKey("device")) {
+        				JsonObject newDevice = data.getJsonObject("device");
+        				
+        				JsonArray devices = updateuserinfo.getJsonArray("devices", new JsonArray()).copy();
+        				
+        				for (int i = 0; i < devices.size(); i++) {
+        					JsonObject device = devices.getJsonObject(i);
+        					
+        					String newId = newDevice.getJsonObject("jpush", new JsonObject()).getString("id", "");
+        					String oldId = device.getJsonObject("jpush", new JsonObject()).getString("id", "");
+        					
+        					if (!StringUtils.isEmpty(newId) && newId.equals(oldId)) {
+        						devices.remove(i);
+        						break;
+        					}
+        				}
+        				
+        				devices.add(newDevice);
+        				
+        				updateuserinfo.put("devices", devices);
+        			}
+        			
         			System.out.println(updateuserinfo.encode());
 
         			mongodb.save("aup_user_info", updateuserinfo, save -> {
