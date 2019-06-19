@@ -260,6 +260,7 @@ public class MainVerticle extends AbstractVerticle {
 			        					.put("phoneno", userinfo.getString("phoneno"))
 			        					.put("nickname", userinfo.getString("nickname"))
 			        					.put("avatar", userinfo.getString("avatar"))
+			        					.put("device", userinfo.getJsonObject("device"))
 			        					.put("avatarbase64", avatarbase64)
 			        					);
 			        			
@@ -269,6 +270,7 @@ public class MainVerticle extends AbstractVerticle {
 			        					.put("openid", userinfo.getString("openid"))
 			        					.put("phoneno", userinfo.getString("phoneno"))
 			        					.put("nickname", userinfo.getString("nickname"))
+			        					.put("device", userinfo.getJsonObject("device"))
 			        					.put("avatar", userinfo.getString("avatar"))
 			        					);
 			        			
@@ -282,6 +284,7 @@ public class MainVerticle extends AbstractVerticle {
 	        					.put("openid", userinfo.getString("openid"))
             					.put("phoneno", userinfo.getString("phoneno"))
             					.put("nickname", userinfo.getString("nickname"))
+	        					.put("device", userinfo.getJsonObject("device"))
             					.put("avatar", userinfo.getString("avatar"))
 	        					.put("avatarbase64", userinfo.getString("avatarbase64"))
             					);
