@@ -1295,6 +1295,7 @@ public class MainVerticle extends AbstractVerticle {
 
             									JsonObject body = new JsonObject().put("context", new JsonObject().put("openid", retaccess.getString("openid")));
             									producer.send(new JsonObject().put("body", body));
+            									producer.end();
             									
         									}, handler -> {});
 
