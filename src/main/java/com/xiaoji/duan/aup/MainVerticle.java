@@ -391,6 +391,7 @@ public class MainVerticle extends AbstractVerticle {
 	
 	private void getUserInfoByPhone(RoutingContext ctx) {
         String phoneno = ctx.request().getParam("phoneno");
+        String withavatar = ctx.request().getParam("avatar");
 
 		JsonObject ret = new JsonObject();
 		ret.put("errcode", "0");
@@ -410,7 +411,7 @@ public class MainVerticle extends AbstractVerticle {
 
         			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
         		} else {
-        			if (!userinfo.containsKey("avatarbase64") || StringUtils.isEmpty(userinfo.getString("avatarbase64"))) {
+        			if (!"false".equals(withavatar) && (!userinfo.containsKey("avatarbase64") || StringUtils.isEmpty(userinfo.getString("avatarbase64")))) {
         				String username = userinfo.getString("nickname");
 						String avatarurl = getAvatarUrl(username);
 
