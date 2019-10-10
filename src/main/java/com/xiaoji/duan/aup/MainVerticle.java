@@ -432,6 +432,9 @@ public class MainVerticle extends AbstractVerticle {
 							}
 						});
         			} else {
+        				if ("false".equals(withavatar)) {
+            				userinfo.remove("avatarbase64");
+        				}
             			ret.put("data", userinfo);
             			
             			ctx.response().putHeader("Content-Type", "application/json;charset=UTF-8").end(ret.encode());
