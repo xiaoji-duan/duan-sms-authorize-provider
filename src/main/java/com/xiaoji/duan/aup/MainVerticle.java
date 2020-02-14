@@ -581,7 +581,7 @@ public class MainVerticle extends AbstractVerticle {
         			JsonObject updateuserinfo = userinfo.copy().mergeIn(data);
 
         			if (data.containsKey("device")) {
-        				JsonObject newDevice = data.getJsonObject("device");
+        				JsonObject newDevice = data.getJsonObject("device", new JsonObject());
         				
         				JsonArray devices = updateuserinfo.getJsonArray("devices", new JsonArray()).copy();
         				
@@ -598,6 +598,16 @@ public class MainVerticle extends AbstractVerticle {
         				}
         				
         				devices.add(newDevice);
+        				
+        				JsonObject oldDevice = updateuserinfo.getJsonObject("device", new JsonObject());
+        				
+        				String newJpushId = newDevice.getJsonObject("jpush", new JsonObject()).getString("id", "");
+        				String oldJpushId = oldDevice.getJsonObject("jpush", new JsonObject()).getString("id", "");
+        				
+        				if (!"".equals(newJpushId) && !newJpushId.equals(oldJpushId)) {
+        					System.out.println("User " + unionid + " has changed default device to " + newJpushId);
+            				updateuserinfo.put("device", newDevice.copy());
+        				}
         				
         				updateuserinfo.put("devices", devices);
         			}
